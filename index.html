@@ -8,7 +8,7 @@
   :root{
     --bg:#0A0C10; --surface:#141821; --surface2:#1c222e; --line:#28303f;
     --text:#E6EAF2; --text2:#9aa6bd; --text3:#5f6b82;
-    --accent:#00C2FF; --amber:#FF6B35; --good:#33d69f; --warn:#FF6B35;
+    --accent:#00C2FF; --amber:#FF6B35; --good:#33d69f; --warn:#FFB020;
     --radius:14px;
   }
   *{box-sizing:border-box}
@@ -19,18 +19,28 @@
   button.ghost{background:var(--surface2);color:var(--text)}
   button.ghost:hover{background:#242c3a}
   button:disabled{opacity:.5;cursor:not-allowed}
-  input,textarea{font:inherit;background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 13px;width:100%}
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-  .wrap{max-width:1100px;margin:0 auto;padding:24px}
-  header.top{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:16px 24px;position:sticky;top:0;background:rgba(10,12,16,.9);backdrop-filter:blur(8px);z-index:10}
+  input,textarea,select{font:inherit;background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 13px;width:100%}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px}
+  header.top{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:14px 24px;position:sticky;top:0;background:rgba(10,12,16,.92);backdrop-filter:blur(8px);z-index:10;flex-wrap:wrap}
   .logo{display:flex;align-items:center;gap:10px;font-weight:700}
   .logo .dot{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#0077aa);display:grid;place-items:center;color:#00121b;font-size:14px}
+  nav.tabs{display:flex;gap:4px;margin-left:8px}
+  .navlink{background:transparent;color:var(--text2);font-weight:600;padding:8px 14px;border-radius:9px}
+  .navlink:hover{background:var(--surface2);color:var(--text)}
+  .navlink.on{background:var(--surface2);color:var(--accent)}
   .spacer{flex:1}
+  .who{font-size:13px;color:var(--text2)}
   .muted{color:var(--text2)} .dim{color:var(--text3)}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
   .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--surface2);color:var(--text2)}
   .pill.pending{background:rgba(255,107,53,.14);color:var(--amber)}
+  .pill.done{background:rgba(51,214,159,.14);color:var(--good)}
   .grid{display:grid;gap:14px}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:20px;margin:0}
+  h3{margin:22px 0 8px;font-size:15px}
+  .rowhead{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
   /* login */
   .center{min-height:100vh;display:grid;place-items:center}
   .login{width:min(420px,92vw)}
@@ -38,20 +48,49 @@
   .login p{margin:0 0 20px;color:var(--text2)}
   .field{margin-bottom:12px}
   .field label{display:block;font-size:12px;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-  /* queue */
+  /* stat cards */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat .n{font-size:30px;font-weight:700;letter-spacing:-.02em}
+  .stat .l{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .stat .n.accent{color:var(--accent)} .stat .n.amber{color:var(--amber)} .stat .n.good{color:var(--good)}
+  /* bars */
+  .bar{height:8px;border-radius:999px;background:var(--surface2);overflow:hidden}
+  .bar>span{display:block;height:100%;background:var(--accent);border-radius:999px}
+  .critrow{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .critrow .lbl{flex:none;width:210px;font-size:13px;color:var(--text2)}
+  .critrow .bar{flex:1}
+  .critrow .v{flex:none;width:44px;text-align:right;font-variant-numeric:tabular-nums;font-weight:650}
+  /* lists */
   .qitem{display:flex;gap:14px;align-items:center;cursor:pointer;transition:background .15s}
   .qitem:hover{background:var(--surface2)}
   .thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;background:#000;flex:none}
+  .thumb.sm{width:52px;height:52px}
+  .score{font-variant-numeric:tabular-nums;font-weight:700}
+  /* trainee cards */
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .tcard{cursor:pointer;transition:border-color .15s,background .15s}
+  .tcard:hover{border-color:var(--accent);background:var(--surface2)}
+  .tcard .nm{font-weight:650;font-size:16px}
+  .tmeta{display:flex;gap:14px;margin-top:12px;font-size:13px;color:var(--text2)}
+  .tmeta b{color:var(--text);font-weight:650}
+  .prog{display:flex;align-items:center;gap:10px;margin-top:12px}
+  .prog .bar{flex:1}
+  .prog .pct{font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums}
+  .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1c8bb0,#0a5a75);display:grid;place-items:center;font-weight:700;color:#eaffff;flex:none}
   /* review */
   .review{display:grid;grid-template-columns:1.2fr .9fr;gap:20px}
   @media(max-width:880px){.review{grid-template-columns:1fr}}
   .imgwrap{position:relative;background:#000;border-radius:var(--radius);overflow:hidden;user-select:none}
   .imgwrap img{display:block;width:100%}
-  .arrow{position:absolute;transform:translate(-50%,-100%);font-size:0;pointer-events:none}
+  .arrow{position:absolute;transform:translate(-50%,-100%);font-size:0}
   .arrow svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
   .arrow .num{position:absolute;top:-8px;left:14px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:999px;width:18px;height:18px;display:grid;place-items:center}
   .arrow.doc .num{background:var(--amber)}
-  .legend{display:flex;gap:16px;margin-top:8px;font-size:12px;color:var(--text2)}
+  .arrow .adel{position:absolute;top:-10px;left:-14px;width:20px;height:20px;border-radius:50%;background:#e5484d;color:#fff;font-size:14px;line-height:1;display:none;place-items:center;padding:0;font-weight:700;border:2px solid #0a0c10}
+  .arrow.editable{pointer-events:auto;cursor:pointer}
+  .arrow.editable:hover .adel{display:grid}
+  .legend{display:flex;gap:16px;margin-top:8px;font-size:12px;color:var(--text2);flex-wrap:wrap}
   .legend b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
   .rubric-row{display:flex;align-items:center;gap:10px;margin:10px 0}
   .rubric-row .lbl{flex:1;font-size:13px;color:var(--text2)}
@@ -59,10 +98,22 @@
   .scale .s{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text3);font-size:12px;font-weight:700;display:grid;place-items:center;cursor:pointer}
   .scale .s.on{background:var(--accent);color:#00121b;border-color:var(--accent)}
   .scale.doc .s.on{background:var(--amber);border-color:var(--amber);color:#fff}
-  h3{margin:22px 0 8px;font-size:15px}
+  .annrow{display:flex;align-items:center;gap:8px;margin:8px 0}
+  .annrow .num{flex:none;width:20px;height:20px;border-radius:999px;background:var(--amber);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+  .annrow input{flex:1}
+  .annrow .del{flex:none;background:var(--surface2);color:#e5484d;padding:8px 11px;font-size:15px;line-height:1;border-radius:8px}
+  .annrow .del:hover{background:#3a222550}
+  .cmp{display:flex;gap:8px;align-items:baseline}
+  .cmp .you{color:var(--text2)} .cmp .ed{color:var(--amber);font-weight:700}
   .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--line);padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.5);z-index:50}
   .hint{font-size:12px;color:var(--text3);margin-top:6px}
   .empty{text-align:center;color:var(--text3);padding:60px 0}
+  table.log{width:100%;border-collapse:collapse}
+  table.log td,table.log th{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);font-size:14px}
+  table.log th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);font-weight:600}
+  table.log tr.click{cursor:pointer}
+  table.log tr.click:hover td{background:var(--surface2)}
+  .back{margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -73,7 +124,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 const SUPABASE_URL = 'https://swnncflzcpmtfzruuibx.supabase.co'
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3bm5jZmx6Y3BtdGZ6cnV1aWJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1ODI4NzAsImV4cCI6MjA5OTE1ODg3MH0.2jZuYYnofORfHwYd70H8rISRlqgjJewxbsuLtzu9JOw'
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
-
+const REQUIRED = 80
 const CRITERIA = [
   ['probeHandling','Probe handling & orientation'],
   ['imageAcquisition','Image acquisition & optimization'],
@@ -84,15 +135,38 @@ const CRITERIA = [
 const app = document.getElementById('app')
 const esc = s => (s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))
 const imgURL = p => `${SUPABASE_URL}/storage/v1/object/public/submission-images/${p}`
-let me = null, meName = null
+const fmtDate = t => t ? new Date(t).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}) : ''
+const fmtDT = t => t ? new Date(t).toLocaleString(undefined,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : ''
+const initials = n => (n||'?').replace(/^(Sister|Nurse|Dr\.?)\s+/i,'').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()
+
+let me=null, meName=null
+let NURSES=[], SUBS=[], REVIEWS=[], REVBYSUB={}
+let state={view:'overview', arg:null}
 
 function toast(msg){ const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600) }
+const avg = obj => { const v=CRITERIA.map(([k])=>obj?.[k]||0).filter(x=>x>0); return v.length? v.reduce((a,b)=>a+b,0)/v.length : 0 }
+const reviewFor = id => REVBYSUB[id]||null
+const nurseSubs = name => SUBS.filter(s=>s.nurse_name===name)
 
-// ---------- Sign-in (identity) ----------
-async function boot(){
-  me = localStorage.getItem('epic_edu_email')
-  meName = localStorage.getItem('epic_edu_name')
-  if(me) renderQueue(); else renderLogin()
+async function load(){
+  const [n,s,r] = await Promise.all([
+    sb.from('nurses').select('*'),
+    sb.from('submissions').select('*').order('submitted_at',{ascending:true}),
+    sb.from('reviews').select('*'),
+  ])
+  NURSES = n.data||[]; SUBS = s.data||[]; REVIEWS = r.data||[]
+  REVBYSUB = {}; REVIEWS.forEach(rv=> REVBYSUB[rv.submission_id]=rv)
+  // include any trainee that has submitted but is not in the nurses table
+  const known = new Set(NURSES.map(x=>x.full_name))
+  ;[...new Set(SUBS.map(s=>s.nurse_name).filter(Boolean))].forEach(nm=>{
+    if(!known.has(nm)) NURSES.push({full_name:nm, email:'', clinic:''})
+  })
+}
+
+// ---------- shell ----------
+function boot(){
+  me = localStorage.getItem('epic_edu_email'); meName = localStorage.getItem('epic_edu_name')
+  if(me){ load().then(()=>go('overview')) } else renderLogin()
 }
 function renderLogin(){
   app.innerHTML = `<div class="center"><div class="login card">
@@ -103,129 +177,318 @@ function renderLogin(){
     <button id="go" style="width:100%">Enter dashboard</button>
     <div class="hint">Your identity is recorded on every review you submit.</div>
   </div></div>`
-  app.querySelector('#go').onclick = e=>{
+  app.querySelector('#go').onclick = ()=>{
     const name = app.querySelector('#name').value.trim()
     const addr = app.querySelector('#email').value.trim().toLowerCase()
     if(!name || !addr.includes('@')){ toast('Enter your name and a valid email.'); return }
     me = addr; meName = name
-    localStorage.setItem('epic_edu_email', addr)
-    localStorage.setItem('epic_edu_name', name)
-    renderQueue()
+    localStorage.setItem('epic_edu_email', addr); localStorage.setItem('epic_edu_name', name)
+    load().then(()=>go('overview'))
   }
 }
 function signOut(){ localStorage.removeItem('epic_edu_email'); localStorage.removeItem('epic_edu_name'); me=null; renderLogin() }
+function go(view, arg){ state={view, arg}; render(); window.scrollTo(0,0) }
+async function reload(){ await load() }
+
+function shell(inner){
+  const tabs = [['overview','Overview'],['queue','Queue'],['trainees','Trainees'],['reviewed','Reviewed']]
+    .map(([v,l])=>`<button class="navlink ${state.view===v?'on':''}" data-v="${v}">${l}</button>`).join('')
+  app.innerHTML = `<header class="top">
+      <div class="logo"><span class="dot">&#9670;</span> EPIC Imaging</div>
+      <nav class="tabs">${tabs}</nav>
+      <div class="spacer"></div>
+      <span class="who">${esc(meName||me)}</span>
+      <button class="ghost" id="signout">Sign out</button>
+    </header><div class="wrap">${inner}</div>`
+  app.querySelectorAll('.navlink').forEach(b=> b.onclick=()=>go(b.dataset.v))
+  app.querySelector('#signout').onclick = signOut
+}
+
+function render(){
+  const v = state.view
+  if(v==='overview') return renderOverview()
+  if(v==='queue') return renderQueue()
+  if(v==='trainees') return renderTrainees()
+  if(v==='trainee') return renderTraineeDetail(state.arg)
+  if(v==='reviewed') return renderReviewed()
+  if(v==='grade') return renderGrade(state.arg.sub, state.arg.existing)
+  if(v==='view') return renderCompleted(state.arg)
+}
+
+// ---------- Overview ----------
+function renderOverview(){
+  const pending = SUBS.filter(s=>s.status==='pending')
+  const reviewed = SUBS.filter(s=>s.status==='reviewed')
+  const scores = reviewed.map(s=>avg(reviewFor(s.id)?.rubric)).filter(x=>x>0)
+  const overall = scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length) : 0
+  // per-criterion cohort average
+  const crit = CRITERIA.map(([k,l])=>{
+    const vals = reviewed.map(s=>reviewFor(s.id)?.rubric?.[k]||0).filter(x=>x>0)
+    return {l, v: vals.length? vals.reduce((a,b)=>a+b,0)/vals.length : 0}
+  })
+  const weakest = crit.filter(c=>c.v>0).sort((a,b)=>a.v-b.v)[0]
+  const recent = [...reviewed].map(s=>({s,rv:reviewFor(s.id)})).filter(x=>x.rv)
+    .sort((a,b)=>new Date(b.rv.reviewed_at)-new Date(a.rv.reviewed_at)).slice(0,5)
+  shell(`
+    <div class="rowhead"><h2>Overview</h2><span class="dim">Point-of-care ultrasound competency programme</span></div>
+    <div class="stats">
+      <div class="card stat"><div class="n accent">${NURSES.length}</div><div class="l">Trainees</div></div>
+      <div class="card stat"><div class="n amber">${pending.length}</div><div class="l">Awaiting review</div></div>
+      <div class="card stat"><div class="n good">${reviewed.length}</div><div class="l">Reviews completed</div></div>
+      <div class="card stat"><div class="n">${overall? overall.toFixed(1):'&ndash;'}<span class="dim" style="font-size:16px">/5</span></div><div class="l">Avg competency</div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px">
+      <div class="card">
+        <h3 style="margin-top:0">Cohort competency by criterion</h3>
+        ${crit.map(c=>`<div class="critrow"><span class="lbl">${c.l}</span>
+          <span class="bar"><span style="width:${c.v/5*100}%;background:${c.v&&c.v<3?'var(--amber)':'var(--accent)'}"></span></span>
+          <span class="v">${c.v? c.v.toFixed(1):'&ndash;'}</span></div>`).join('')}
+        ${weakest? `<div class="hint">Weakest area across the cohort: <b style="color:var(--amber)">${weakest.l}</b>. A focused teaching session here would lift the group.</div>`:''}
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Recent reviews</h3>
+        ${recent.length? recent.map(({s,rv})=>`<div class="qitem" data-id="${s.id}" style="padding:8px 0;border-bottom:1px solid var(--line)">
+          <img class="thumb sm" src="${imgURL(s.image_path)}" alt=""/>
+          <div style="flex:1"><div style="font-weight:600;font-size:14px">${esc(s.exam_type||'Scan')}</div>
+          <div class="dim" style="font-size:12px">${esc(s.nurse_name)} &middot; ${fmtDate(rv.reviewed_at)}</div></div>
+          <span class="score" style="color:var(--amber)">${avg(rv.rubric).toFixed(1)}</span></div>`).join('') : '<div class="dim">No reviews yet.</div>'}
+      </div>
+    </div>`)
+  app.querySelectorAll('.qitem[data-id]').forEach(el=> el.onclick=()=> openCompleted(el.dataset.id))
+}
 
 // ---------- Queue ----------
-function chrome(inner){
-  return `<header class="top"><div class="logo"><span class="dot">◈</span> EPIC Imaging · Education</div>
-    <div class="spacer"></div><span class="muted" style="font-size:13px">${esc(me)}</span>
-    <button class="ghost" id="signout">Sign out</button></header>${inner}`
-}
-async function renderQueue(){
-  app.innerHTML = chrome(`<div class="wrap"><div id="q"><div class="empty">Loading…</div></div></div>`)
-  app.querySelector('#signout').onclick = signOut
-  const { data:pending } = await sb.from('submissions').select('*').eq('status','pending').order('submitted_at',{ascending:true})
-  const { count:reviewed } = await sb.from('submissions').select('*',{count:'exact',head:true}).eq('status','reviewed')
-  const q = app.querySelector('#q')
-  const head = `<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-      <h2 style="margin:0;font-size:20px">Review queue</h2>
-      <span class="pill pending">${(pending||[]).length} pending</span>
-      <span class="pill">${reviewed||0} reviewed</span></div>`
-  if(!pending || !pending.length){ q.innerHTML = head + `<div class="empty">🎉 Queue is clear. No scans awaiting review.</div>`; return }
-  q.innerHTML = head + `<div class="grid">` + pending.map(s=>`
-    <div class="card qitem" data-id="${s.id}">
-      <img class="thumb" src="${imgURL(s.image_path)}" alt=""/>
-      <div style="flex:1">
-        <div style="font-weight:650">${esc(s.exam_type||'Ultrasound scan')}</div>
-        <div class="muted" style="font-size:13px">${esc(s.nurse_name)} · ${new Date(s.submitted_at).toLocaleString()}</div>
-      </div>
-      <span class="pill pending">Pending</span>
-    </div>`).join('') + `</div>`
-  q.querySelectorAll('.qitem').forEach(el=> el.onclick = ()=> renderReview(pending.find(p=>p.id===el.dataset.id)))
+function renderQueue(){
+  let pending = SUBS.filter(s=>s.status==='pending')
+  const filter = state.filter||'all'
+  const names = [...new Set(SUBS.map(s=>s.nurse_name).filter(Boolean))].sort()
+  if(filter!=='all') pending = pending.filter(s=>s.nurse_name===filter)
+  shell(`
+    <div class="rowhead"><h2>Review queue</h2>
+      <span class="pill pending">${pending.length} pending</span>
+      <div class="spacer"></div>
+      <select id="filt" style="width:auto"><option value="all">All trainees</option>
+        ${names.map(n=>`<option value="${esc(n)}" ${n===filter?'selected':''}>${esc(n)}</option>`).join('')}</select>
+    </div>
+    ${pending.length? `<div class="grid">`+pending.map(s=>`
+      <div class="card qitem" data-id="${s.id}">
+        <img class="thumb" src="${imgURL(s.image_path)}" alt=""/>
+        <div style="flex:1"><div style="font-weight:650">${esc(s.exam_type||'Ultrasound scan')}</div>
+          <div class="muted" style="font-size:13px">${esc(s.nurse_name)} &middot; ${fmtDT(s.submitted_at)}</div></div>
+        <span class="pill pending">Pending</span></div>`).join('')+`</div>`
+      : `<div class="empty">&#127881; Nothing waiting${filter!=='all'?' for this trainee':''}. Queue is clear.</div>`}`)
+  const fsel = app.querySelector('#filt')
+  fsel.onchange = ()=>{ state.filter=fsel.value; renderQueue() }
+  app.querySelectorAll('.qitem').forEach(el=> el.onclick=()=> openGrade(el.dataset.id))
 }
 
-// ---------- Review ----------
-function arrowSVG(color){ return `<svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 0 L9 12 L13 12 L13 30 L17 30 L17 12 L21 12 Z" fill="${color}"/></svg>` }
-function drawArrows(container, arrows, cls, color){
-  arrows.forEach(a=>{
-    const d=document.createElement('div'); d.className='arrow '+cls
-    d.style.left=(a.position.x*100)+'%'; d.style.top=(a.position.y*100)+'%'
-    d.style.transform=`translate(-50%,-100%) rotate(${(a.angle||-Math.PI/2)+Math.PI/2}rad)`
-    d.innerHTML=arrowSVG(color)+`<span class="num">${a.n}</span>`
-    container.appendChild(d)
-  })
+// ---------- Trainees ----------
+function traineeStats(name){
+  const subs = nurseSubs(name)
+  const reviewed = subs.filter(s=>s.status==='reviewed')
+  const scores = reviewed.map(s=>avg(reviewFor(s.id)?.rubric)).filter(x=>x>0)
+  const last = subs.map(s=>s.submitted_at).filter(Boolean).sort().slice(-1)[0]
+  return { total:subs.length, reviewed:reviewed.length, pending:subs.length-reviewed.length,
+    avg: scores.length? scores.reduce((a,b)=>a+b,0)/scores.length : 0,
+    exams: new Set(subs.map(s=>s.exam_type).filter(Boolean)).size, last }
 }
-function renderReview(s){
-  const grade = { probeHandling:0,imageAcquisition:0,anatomyId:0,pathology:0,reasoning:0 }
-  const docArrows = []
-  app.innerHTML = chrome(`<div class="wrap">
-    <button class="ghost" id="back" style="margin-bottom:16px">← Queue</button>
+function renderTrainees(){
+  const list = NURSES.map(n=>({n, st:traineeStats(n.full_name)}))
+    .sort((a,b)=> b.st.reviewed-a.st.reviewed || b.st.total-a.st.total)
+  shell(`
+    <div class="rowhead"><h2>Trainees</h2><span class="dim">${NURSES.length} enrolled &middot; ${REQUIRED} reviewed scans to sign-off</span></div>
+    <div class="tgrid">${list.map(({n,st})=>{
+      const pct = Math.min(100, Math.round(st.reviewed/REQUIRED*100))
+      return `<div class="card tcard" data-n="${esc(n.full_name)}">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="avatar">${initials(n.full_name)}</div>
+          <div><div class="nm">${esc(n.full_name)}</div><div class="dim" style="font-size:13px">${esc(n.clinic||'')}</div></div>
+          <div class="spacer"></div>
+          <span class="score" style="color:var(--amber);font-size:18px">${st.avg? st.avg.toFixed(1):'&ndash;'}</span>
+        </div>
+        <div class="prog"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${st.reviewed}/${REQUIRED}</span></div>
+        <div class="tmeta"><span><b>${st.pending}</b> pending</span><span><b>${st.reviewed}</b> reviewed</span>
+          <span><b>${st.exams}</b> exam types</span></div>
+      </div>`}).join('')}</div>`)
+  app.querySelectorAll('.tcard').forEach(el=> el.onclick=()=> go('trainee', el.dataset.n))
+}
+function renderTraineeDetail(name){
+  const n = NURSES.find(x=>x.full_name===name) || {full_name:name}
+  const st = traineeStats(name)
+  const subs = nurseSubs(name).slice().reverse()
+  const pct = Math.min(100, Math.round(st.reviewed/REQUIRED*100))
+  const crit = CRITERIA.map(([k,l])=>{
+    const vals = nurseSubs(name).filter(s=>s.status==='reviewed').map(s=>reviewFor(s.id)?.rubric?.[k]||0).filter(x=>x>0)
+    return {l, v: vals.length? vals.reduce((a,b)=>a+b,0)/vals.length:0}
+  })
+  shell(`
+    <button class="ghost back" id="back">&larr; Trainees</button>
+    <div class="card"><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <div class="avatar" style="width:48px;height:48px;font-size:17px">${initials(name)}</div>
+      <div><h2>${esc(name)}</h2><div class="dim">${esc(n.clinic||'')} ${n.email?'&middot; '+esc(n.email):''}</div></div>
+      <div class="spacer"></div>
+      <div style="text-align:right"><div class="score" style="font-size:26px;color:var(--amber)">${st.avg? st.avg.toFixed(1):'&ndash;'}</div><div class="dim" style="font-size:12px">avg competency</div></div>
+    </div>
+    <div class="prog" style="margin-top:16px"><span class="bar"><span style="width:${pct}%"></span></span><span class="pct">${st.reviewed} / ${REQUIRED} reviewed &middot; ${pct}%</span></div>
+    ${st.reviewed? `<div style="margin-top:16px">${crit.map(c=>`<div class="critrow"><span class="lbl">${c.l}</span>
+        <span class="bar"><span style="width:${c.v/5*100}%;background:${c.v&&c.v<3?'var(--amber)':'var(--accent)'}"></span></span>
+        <span class="v">${c.v? c.v.toFixed(1):'&ndash;'}</span></div>`).join('')}</div>`:''}
+    </div>
+    <h3>Case log (${subs.length})</h3>
+    <div class="grid">${subs.map(s=>{ const rv=reviewFor(s.id); return `
+      <div class="card qitem" data-id="${s.id}" data-st="${s.status}">
+        <img class="thumb" src="${imgURL(s.image_path)}" alt=""/>
+        <div style="flex:1"><div style="font-weight:650">${esc(s.exam_type||'Scan')}</div>
+          <div class="muted" style="font-size:13px">${fmtDT(s.submitted_at)}</div></div>
+        ${rv? `<span class="score" style="color:var(--amber)">${avg(rv.rubric).toFixed(1)}</span><span class="pill done">Reviewed</span>`
+             : `<span class="pill pending">Pending</span>`}</div>`}).join('')}</div>`)
+  app.querySelector('#back').onclick = ()=> go('trainees')
+  app.querySelectorAll('.qitem').forEach(el=> el.onclick=()=> el.dataset.st==='reviewed'? openCompleted(el.dataset.id) : openGrade(el.dataset.id))
+}
+
+// ---------- Reviewed history ----------
+function renderReviewed(){
+  const rows = SUBS.filter(s=>s.status==='reviewed').map(s=>({s,rv:reviewFor(s.id)})).filter(x=>x.rv)
+    .sort((a,b)=> new Date(b.rv.reviewed_at)-new Date(a.rv.reviewed_at))
+  shell(`
+    <div class="rowhead"><h2>Reviewed</h2><span class="pill done">${rows.length} completed</span></div>
+    ${rows.length? `<div class="card" style="padding:6px 14px"><table class="log">
+      <tr><th>Trainee</th><th>Exam</th><th>Your grade</th><th>Reviewed</th><th></th></tr>
+      ${rows.map(({s,rv})=>`<tr class="click" data-id="${s.id}">
+        <td>${esc(s.nurse_name)}</td><td>${esc(s.exam_type||'Scan')}</td>
+        <td><span class="score" style="color:var(--amber)">${avg(rv.rubric).toFixed(1)}</span> <span class="dim">/5</span></td>
+        <td class="muted">${fmtDate(rv.reviewed_at)}</td><td class="dim">View &rarr;</td></tr>`).join('')}
+    </table></div>` : '<div class="empty">No reviews completed yet.</div>'}`)
+  app.querySelectorAll('tr.click').forEach(el=> el.onclick=()=> openCompleted(el.dataset.id))
+}
+
+// ---------- shared arrow drawing ----------
+function arrowSVG(color){ return `<svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 0 L9 12 L13 12 L13 30 L17 30 L17 12 L21 12 Z" fill="${color}"/></svg>` }
+function arrowEl(a, cls, color, onDelete){
+  const d=document.createElement('div'); d.className='arrow '+cls
+  d.style.left=(a.position.x*100)+'%'; d.style.top=(a.position.y*100)+'%'
+  d.style.transform=`translate(-50%,-100%) rotate(${(a.angle||-Math.PI/2)+Math.PI/2}rad)`
+  d.innerHTML=arrowSVG(color)+`<span class="num">${a.n}</span>`
+  if(onDelete){ d.classList.add('editable'); const x=document.createElement('button'); x.className='adel'; x.innerHTML='&times;'; x.title='Delete this arrow'
+    x.onclick=e=>{ e.stopPropagation(); onDelete(a) }; d.appendChild(x) }
+  return d
+}
+function drawArrows(container, arrows, cls, color, onDelete){ (arrows||[]).forEach(a=> container.appendChild(arrowEl(a,cls,color,onDelete))) }
+
+// ---------- Grade (create or edit) ----------
+function openGrade(id){ const sub=SUBS.find(s=>s.id===id); go('grade',{sub, existing:reviewFor(id)}) }
+function renderGrade(s, existing){
+  const grade = Object.assign({probeHandling:0,imageAcquisition:0,anatomyId:0,pathology:0,reasoning:0}, existing?.rubric||{})
+  let docArrows = (existing?.doctor_arrows? JSON.parse(JSON.stringify(existing.doctor_arrows)) : [])
+  shell(`
+    <button class="ghost back" id="back">&larr; Back</button>
     <div class="review">
       <div>
         <div class="imgwrap" id="imgwrap"><img id="img" src="${imgURL(s.image_path)}" alt=""/></div>
         <div class="legend"><span><b style="background:var(--accent)"></b>Trainee arrows</span>
           <span><b style="background:var(--amber)"></b>Your arrows</span>
-          <span class="dim">click the image to drop your own numbered arrow</span></div>
-        <h3>Trainee: ${esc(s.nurse_name)}</h3>
+          <span class="dim">click the image to drop an arrow &middot; hover an arrow and press &times; to delete</span></div>
+        <h3>Trainee: ${esc(s.nurse_name)} &middot; <span class="muted" style="font-weight:400">${esc(s.exam_type||'')}</span></h3>
         <div class="card"><div class="muted" style="font-size:13px;white-space:pre-wrap">${esc(s.self_note)||'<span class="dim">No note provided.</span>'}</div></div>
       </div>
       <div>
-        <h3 style="margin-top:0">Your grade</h3>
+        <h3 style="margin-top:0">Your grade${existing?' <span class="pill done">editing</span>':''}</h3>
         <div class="card" id="rubric"></div>
         <h3>Your annotations</h3>
-        <div class="card" id="docnotes"><div class="dim" style="font-size:13px">Click the image to add arrows, then add a note for each below.</div></div>
+        <div class="card" id="docnotes"></div>
         <h3>Comments to trainee</h3>
-        <textarea id="comments" rows="4" placeholder="Overall feedback, what to work on…"></textarea>
-        <button id="submit" style="width:100%;margin-top:14px">Submit review</button>
+        <textarea id="comments" rows="4" placeholder="Overall feedback, what to work on next">${esc(existing?.comments||'')}</textarea>
+        <button id="submit" style="width:100%;margin-top:14px">${existing?'Update review':'Submit review'}</button>
       </div>
-    </div></div>`)
-  app.querySelector('#signout').onclick = signOut
-  app.querySelector('#back').onclick = renderQueue
-
+    </div>`)
+  app.querySelector('#back').onclick = ()=> history.length>1 ? window.history.back() : go('queue')
   const wrap = app.querySelector('#imgwrap')
   const selfArrows = Array.isArray(s.nurse_arrows)? s.nurse_arrows : []
   const img = app.querySelector('#img')
-  img.onload = ()=> drawArrows(wrap, selfArrows, 'self', getComputedStyle(document.documentElement).getPropertyValue('--accent'))
-
-  // doctor arrow placement
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent')
+  const amber = getComputedStyle(document.documentElement).getPropertyValue('--amber')
+  const paint = ()=>{ wrap.querySelectorAll('.arrow').forEach(e=>e.remove())
+    drawArrows(wrap, selfArrows, 'self', accent)
+    drawArrows(wrap, docArrows, 'doc', amber, removeArrow) }
+  img.onload = paint; if(img.complete) paint()
   wrap.addEventListener('click', ev=>{
     if(ev.target.closest('.arrow')) return
-    const r = wrap.getBoundingClientRect()
-    const x=(ev.clientX-r.left)/r.width, y=(ev.clientY-r.top)/r.height
+    const r=wrap.getBoundingClientRect(); const x=(ev.clientX-r.left)/r.width, y=(ev.clientY-r.top)/r.height
     if(x<0||x>1||y<0||y>1) return
-    docArrows.push({ n:docArrows.length+1, position:{x,y}, angle:-Math.PI/2, note:'' })
-    refreshDoc()
+    docArrows.push({n:docArrows.length+1, position:{x,y}, angle:-Math.PI/2, note:''}); refreshDoc()
   })
+  function removeArrow(a){ const i=docArrows.indexOf(a); if(i>=0){ docArrows.splice(i,1); docArrows.forEach((d,j)=>d.n=j+1); refreshDoc() } }
   function refreshDoc(){
-    wrap.querySelectorAll('.arrow.doc').forEach(e=>e.remove())
-    drawArrows(wrap, docArrows, 'doc', getComputedStyle(document.documentElement).getPropertyValue('--amber'))
-    const dn = app.querySelector('#docnotes')
-    if(!docArrows.length){ dn.innerHTML='<div class="dim" style="font-size:13px">Click the image to add arrows, then add a note for each below.</div>'; return }
-    dn.innerHTML = docArrows.map((a,i)=>`<div class="rubric-row">
-      <span class="num" style="background:var(--amber);color:#fff;border-radius:999px;width:20px;height:20px;display:grid;place-items:center;font-size:11px;font-weight:700">${a.n}</span>
-      <input data-i="${i}" class="docnote" placeholder="What is arrow ${a.n}?" value="${esc(a.note)}"/></div>`).join('')
-    dn.querySelectorAll('.docnote').forEach(inp=> inp.oninput=()=> docArrows[inp.dataset.i].note=inp.value)
+    paint()
+    const dn=app.querySelector('#docnotes')
+    if(!docArrows.length){ dn.innerHTML='<div class="dim" style="font-size:13px">Click the image to add arrows, then label each below.</div>'; return }
+    dn.innerHTML = docArrows.map((a,i)=>`<div class="annrow"><span class="num">${a.n}</span>
+      <input data-i="${i}" placeholder="What is arrow ${a.n}?" value="${esc(a.note)}"/>
+      <button class="del" data-del="${i}" title="Delete arrow ${a.n}">&times;</button></div>`).join('')
+    dn.querySelectorAll('input').forEach(inp=> inp.oninput=()=> docArrows[inp.dataset.i].note=inp.value)
+    dn.querySelectorAll('.del').forEach(b=> b.onclick=()=> removeArrow(docArrows[b.dataset.del]))
   }
-
-  // rubric
-  const rub = app.querySelector('#rubric')
+  refreshDoc()
+  const rub=app.querySelector('#rubric')
   rub.innerHTML = CRITERIA.map(([k,label])=>`<div class="rubric-row"><span class="lbl">${label}</span>
-    <div class="scale doc" data-k="${k}">${[1,2,3,4,5].map(n=>`<span class="s" data-n="${n}">${n}</span>`).join('')}</div></div>`).join('')
+    <div class="scale doc" data-k="${k}">${[1,2,3,4,5].map(n=>`<span class="s ${grade[k]>=n?'on':''}" data-n="${n}">${n}</span>`).join('')}</div></div>`).join('')
   rub.querySelectorAll('.scale').forEach(sc=> sc.querySelectorAll('.s').forEach(dot=> dot.onclick=()=>{
     const k=sc.dataset.k, n=+dot.dataset.n; grade[k]=n
-    sc.querySelectorAll('.s').forEach(d=> d.classList.toggle('on', +d.dataset.n<=n))
-  }))
-
+    sc.querySelectorAll('.s').forEach(d=> d.classList.toggle('on', +d.dataset.n<=n)) }))
   app.querySelector('#submit').onclick = async e=>{
     if(Object.values(grade).some(v=>v<1)){ toast('Score all five criteria first.'); return }
-    e.target.disabled=true; e.target.textContent='Submitting…'
-    const { error } = await sb.from('reviews').insert({
-      submission_id:s.id, reviewer_email:me, rubric:grade,
-      doctor_arrows:docArrows, comments:app.querySelector('#comments').value
-    })
-    if(error){ e.target.disabled=false; e.target.textContent='Submit review'; toast(error.message); return }
-    toast('Review sent to '+s.nurse_name); renderQueue()
+    e.target.disabled=true; e.target.textContent = existing?'Updating…':'Submitting…'
+    const payload={ rubric:grade, doctor_arrows:docArrows, comments:app.querySelector('#comments').value }
+    let error
+    if(existing){ ({error} = await sb.from('reviews').update(payload).eq('id', existing.id)) }
+    else { ({error} = await sb.from('reviews').insert(Object.assign({submission_id:s.id, reviewer_email:me}, payload))) }
+    if(error){ e.target.disabled=false; e.target.textContent = existing?'Update review':'Submit review'; toast(error.message); return }
+    await reload(); toast(existing?'Review updated':'Review sent to '+s.nurse_name); go('queue')
   }
+}
+
+// ---------- Completed review (read + edit) ----------
+function openCompleted(id){ const sub=SUBS.find(s=>s.id===id); go('view', sub) }
+function renderCompleted(s){
+  const rv = reviewFor(s.id)
+  if(!rv) return openGrade(s.id)
+  shell(`
+    <button class="ghost back" id="back">&larr; Back</button>
+    <div class="review">
+      <div>
+        <div class="imgwrap" id="imgwrap"><img id="img" src="${imgURL(s.image_path)}" alt=""/></div>
+        <div class="legend"><span><b style="background:var(--accent)"></b>Trainee arrows</span>
+          <span><b style="background:var(--amber)"></b>Educator arrows</span></div>
+        <h3>Trainee: ${esc(s.nurse_name)} &middot; <span class="muted" style="font-weight:400">${esc(s.exam_type||'')}</span></h3>
+        <div class="card"><div class="dim" style="font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Trainee findings</div>
+          <div class="muted" style="font-size:14px;white-space:pre-wrap">${esc(s.self_note)||'<span class="dim">No note.</span>'}</div></div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center"><h3 style="margin-top:0;flex:1">Grade</h3>
+          <button class="ghost" id="edit" style="padding:7px 12px">Edit grade</button></div>
+        <div class="card" id="rub"></div>
+        ${(rv.doctor_arrows||[]).length? `<h3>Educator annotations</h3><div class="card">${rv.doctor_arrows.map(a=>`<div class="annrow"><span class="num">${a.n}</span><span class="muted" style="font-size:13px">${esc(a.note)||'(no label)'}</span></div>`).join('')}</div>`:''}
+        <h3>Comments to trainee</h3>
+        <div class="card"><div class="muted" style="font-size:14px;white-space:pre-wrap">${esc(rv.comments)||'<span class="dim">No comments.</span>'}</div></div>
+        <div class="hint">Reviewed by ${esc(rv.reviewer_email||'educator')} &middot; ${fmtDT(rv.reviewed_at)}</div>
+      </div>
+    </div>`)
+  app.querySelector('#back').onclick = ()=> window.history.length>1? window.history.back() : go('reviewed')
+  app.querySelector('#edit').onclick = ()=> go('grade',{sub:s, existing:rv})
+  const wrap=app.querySelector('#imgwrap'), img=app.querySelector('#img')
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent')
+  const amber=getComputedStyle(document.documentElement).getPropertyValue('--amber')
+  const paint=()=>{ wrap.querySelectorAll('.arrow').forEach(e=>e.remove())
+    drawArrows(wrap, Array.isArray(s.nurse_arrows)?s.nurse_arrows:[], 'self', accent)
+    drawArrows(wrap, rv.doctor_arrows||[], 'doc', amber) }
+  img.onload=paint; if(img.complete) paint()
+  const rub=app.querySelector('#rub')
+  rub.innerHTML = `<div class="rubric-row" style="border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:6px">
+      <span class="lbl" style="color:var(--text3)">Criterion</span><span class="dim" style="font-size:12px">self &middot; <b style="color:var(--amber)">educator</b></span></div>`
+    + CRITERIA.map(([k,label])=>`<div class="rubric-row"><span class="lbl">${label}</span>
+      <span class="cmp"><span class="you">${s.self_rubric?.[k]||'&ndash;'}</span><span class="dim">&middot;</span><span class="ed">${rv.rubric?.[k]||'&ndash;'}</span></span></div>`).join('')
+    + `<div class="rubric-row" style="border-top:1px solid var(--line);padding-top:10px;margin-top:6px"><span class="lbl" style="color:var(--text)">Average</span>
+      <span class="cmp"><span class="you">${avg(s.self_rubric).toFixed(1)}</span><span class="dim">&middot;</span><span class="ed">${avg(rv.rubric).toFixed(1)}</span></span></div>`
 }
 
 boot()
